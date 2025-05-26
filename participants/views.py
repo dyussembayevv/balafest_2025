@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from .models import Participant
 
 def index(request):
-    top_participants = Participant.objects.order_by('-score')[:10]  # or other sorting field
+    top_participants = Participant.objects.order_by('-points')[:10]  # or other sorting field
     return render(request, 'index.html', {'participants': top_participants})
 
 @login_required
