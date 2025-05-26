@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: balafest
+    env: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn balafest_1.wsgi
+    envVars:
+      - key: DJANGO_SETTINGS_MODULE
+        value: balafest_1.settings
+      - key: SECRET_KEY
+        value: your-secret-key-here
+      - key: DEBUG
+        value: "False"

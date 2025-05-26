@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Participant: {{ participant.uuid }}</h2>
+
+<form method="post">
+    {% csrf_token %}
+    <label>Name:</label>
+    <input type="text" name="name" value="{{ participant.name }}"><br>
+    <label>Points:</label>
+    <input type="number" name="points" value="{{ participant.points }}"><br>
+    <button type="submit">Save</button>
+</form>
+
+<img src="{{ participant.barcode_image.url }}" alt="Barcode">
+{% endblock %}
