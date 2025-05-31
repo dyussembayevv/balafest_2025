@@ -5,12 +5,12 @@ from django.db.models import Sum, Q
 
 
 
-#def index(request):
+def index(request):
     #top_participants = Participant.objects.annotate(
         #total_points=Sum('gamecompletion__game__points', filter=Q(gamecompletion__completed=True))
     #).order_by('-total_points')[:10]
 
-    #return render(request, 'index.html', {'participants': top_participants})
+    return render(request, 'index.html')
 
 @login_required
 def participant_detail(request, uuid):
