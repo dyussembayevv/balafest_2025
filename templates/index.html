@@ -11,7 +11,7 @@
           <h3 class="display-3">ТОП 10 Участников</h3>
           <ul>
             {% for p in participants %}
-              <li class="list-group-item"><a href="{% url 'participant_detail' p.uuid %}">{{ p.name }}</a> - Очки: {{ p.points }}</li>
+              <li class="list-group-item"><a href="{% url 'participant_detail' p.uuid %}">{{ p.name }}</a> - Очки: {{ p.total_points }}</li>
             {% endfor %}
           </ul>
         </div>
