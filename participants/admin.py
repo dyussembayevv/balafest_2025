@@ -1,13 +1,18 @@
 from django.contrib import admin
-from .models import Participant
+from .models import Participant, Game, GameCompletion
 
 @admin.register(Participant)
 class ParticipantAdmin(admin.ModelAdmin):
-    list_display = ('name', 'age', 'calculated_points')
+    list_display = ('name', 'age')
     ordering = ['name']
 
-    def calculated_points(self, obj):
-        from .models import GameCompletion
-        return sum(gc.game.points for gc in GameCompletion.objects.filter(participant=obj, completed=True))
+@admin.register(Game)
+class GameAdmin(admin.ModelAdmin):
+    list_display = ('name', 'points', 'age_group')
+    list_filter = ('age_group',)
+    search_fields = ('name',)
 
-    calculated_points.short_description = 'Points'
+@admin.register(GameCompletion)
+class GameCompletionAdmin(admin.ModelAdmin):
+    list_display = ('participant', 'game', 'completed')
+    list_filter = ('completed',)
