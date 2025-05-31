@@ -9,7 +9,7 @@ class ParticipantAdmin(admin.ModelAdmin):
 
 @admin.register(Game)
 class GameAdmin(admin.ModelAdmin):
-    list_display = ('name', 'points', 'age_group')
+    list_display = ('name', 'first_place_points', 'second_place_points', 'third_place_points', 'age_group')
     list_filter = ('age_group',)
     search_fields = ('name',)
 

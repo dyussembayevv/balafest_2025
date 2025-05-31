@@ -19,7 +19,9 @@ class Game(models.Model):
     ]
 
     name = models.CharField(max_length=100)
-    points = models.PositiveIntegerField()
+    first_place_points = models.PositiveIntegerField(default=10)
+    second_place_points = models.PositiveIntegerField(default=7)
+    third_place_points = models.PositiveIntegerField(default=5)
     age_group = models.CharField(max_length=10, choices=AGE_GROUP_CHOICES)
     is_ranked = models.BooleanField(default=False)
 
@@ -31,8 +33,25 @@ class GameCompletion(models.Model):
     game = models.ForeignKey(Game, on_delete=models.CASCADE)
     completed = models.BooleanField(default=False)
 
+    PLACE_CHOICES = [
+        (1, '1st Place'),
+        (2, '2nd Place'),
+        (3, '3rd Place'),
+    ]
+    place = models.PositiveSmallIntegerField(choices=PLACE_CHOICES, null=True, blank=True)
+
     class Meta:
         unique_together = ('participant', 'game')
+
+    def get_awarded_points(self):
+        if self.place == 1:
+            return self.game.first_place_points
+        elif self.place == 2:
+            return self.game.second_place_points
+        elif self.place == 3:
+            return self.game.third_place_points
+        return 0
+
 
 class GamePlacement(models.Model):
     PLACE_CHOICES = [
