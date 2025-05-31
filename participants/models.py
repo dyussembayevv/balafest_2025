@@ -26,7 +26,7 @@ class Game(models.Model):
     is_ranked = models.BooleanField(default=False)
 
     def __str__(self):
-        return f"{self.name} ({self.points} pts)"
+        return f"{self.name}"
 
 class GameCompletion(models.Model):
     participant = models.ForeignKey(Participant, on_delete=models.CASCADE)
