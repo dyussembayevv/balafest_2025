@@ -3,6 +3,11 @@ from .models import Participant
 
 @admin.register(Participant)
 class ParticipantAdmin(admin.ModelAdmin):
-    search_fields = ['name', 'uuid']
-    ordering = ['-points']
-    list_display = ('uuid', 'name', 'points')
+    list_display = ('name', 'age', 'calculated_points')
+    ordering = ['name']
+
+    def calculated_points(self, obj):
+        from .models import GameCompletion
+        return sum(gc.game.points for gc in GameCompletion.objects.filter(participant=obj, completed=True))
+
+    calculated_points.short_description = 'Points'
