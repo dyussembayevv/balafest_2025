@@ -1,5 +1,6 @@
 from django.contrib import admin
-from .models import Participant, Game, GameCompletion
+from .models import Participant, Game, GameCompletion, GamePlacement
+
 
 @admin.register(Participant)
 class ParticipantAdmin(admin.ModelAdmin):
@@ -16,3 +17,5 @@ class GameAdmin(admin.ModelAdmin):
 class GameCompletionAdmin(admin.ModelAdmin):
     list_display = ('participant', 'game', 'completed')
     list_filter = ('completed',)
+
+admin.site.register(GamePlacement)
