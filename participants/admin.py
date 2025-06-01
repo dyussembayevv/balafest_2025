@@ -6,3 +6,6 @@ class ParticipantAdmin(admin.ModelAdmin):
     search_fields = ['name', 'uuid']
     ordering = ['-points']
     list_display = ('uuid', 'name', 'points')
+
+from .models import Game
+admin.site.register(Game)

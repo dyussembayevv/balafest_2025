@@ -22,6 +22,16 @@
                 <button class="btn btn-primary" type="submit">Сохранить</button>
             </form>
         </div>
+
+        {% if games %}
+          <h4>Список игр для возраста {{ participant.age }}</h4>
+          {% for game in games %}
+            <div>
+              <input type="checkbox" id="game_{{ game.id }}">
+              <label for="game_{{ game.id }}">{{ game.name }}</label>
+            </div>
+          {% endfor %}
+        {% endif %}
     </div>
 </body>
 </html>
