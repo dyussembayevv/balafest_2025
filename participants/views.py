@@ -1,7 +1,10 @@
+from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import get_object_or_404, redirect, render
-
 from .models import Participant, Game, Completion
+
+def index(request):
+    top_participants = Participant.objects.order_by('-points')[:10]  # or other sorting field
+    return render(request, 'index.html', {'participants': top_participants})
 
 def get_games_for_age(age):
     try:
