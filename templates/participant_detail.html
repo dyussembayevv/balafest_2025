@@ -15,6 +15,8 @@
                 {% csrf_token %}
                 <label class="form-label">Имя:</label>
                 <input class="form-control" type="text" name="name" value="{{ participant.name }}"><br>
+                <label class="form-label">Возраст:</label>
+                <input class="form-control" type="number" name="age" value="{{ participant.age }}"><br>
                 <label class="form-label">Очки:</label>
                 <input class="form-control" type="number" name="points" value="{{ participant.points }}"><br>
                 <button class="btn btn-primary" type="submit">Сохранить</button>

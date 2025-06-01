@@ -5,6 +5,7 @@ from django.db import models
 class Participant(models.Model):
     uuid = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
     name = models.CharField(max_length=100, blank=True)
+    age = models.IntegerField(default=0)
     points = models.IntegerField(default=0)
     qr_image = models.ImageField(upload_to='barcodes/', blank=True)
 

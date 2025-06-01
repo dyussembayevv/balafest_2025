@@ -12,6 +12,7 @@ def participant_detail(request, uuid):
 
     if request.method == 'POST':
         participant.name = request.POST.get('name')
+        participant.age = request.POST.get('age')
         participant.points = request.POST.get('points')
         participant.save()
         return redirect('participant_detail', uuid=uuid)
