@@ -2,18 +2,24 @@ import uuid
 from django.db import models
 
 # Create your models here.
-AGE_GROUP_CHOICES = [
-    ('6-9', '6-9'),
-    ('10-13', '10-13'),
-    ('14-18', '14-18'),
-]
-
 class Game(models.Model):
+    AGE_GROUP_CHOICES = [
+        ('6-9', '6-9'),
+        ('10-13', '10-13'),
+        ('14-18', '14-18'),
+    ]
     name = models.CharField(max_length=100)
-    age_group = models.CharField(max_length=10)  # Примеры: '6-9', '10-13', '14-18'
+    age_group = models.CharField(max_length=10, choices=AGE_GROUP_CHOICES)
 
     def __str__(self):
-        return f"{self.name} ({self.age_group})"
+        return self.name
+
+class Completion(models.Model):
+    participant = models.ForeignKey('Participant', on_delete=models.CASCADE)
+    game = models.ForeignKey('Game', on_delete=models.CASCADE)
+
+    class Meta:
+        unique_together = ('participant', 'game')
 
 
 class Participant(models.Model):

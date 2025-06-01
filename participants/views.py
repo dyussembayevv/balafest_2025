@@ -1,11 +1,7 @@
-from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib.auth.decorators import login_required
-from .models import Participant, Game
+from django.shortcuts import get_object_or_404, redirect, render
 
-def index(request):
-    top_participants = Participant.objects.order_by('-points')[:10]  # or other sorting field
-    return render(request, 'index.html', {'participants': top_participants})
-
+from .models import Participant, Game, Completion
 
 def get_games_for_age(age):
     try:
@@ -30,12 +26,20 @@ def participant_detail(request, uuid):
         participant.age = request.POST.get('age')
         participant.points = request.POST.get('points')
         participant.save()
+
+        # Обновляем Completion
+        Completion.objects.filter(participant=participant).delete()
+        for game in Game.objects.all():
+            if request.POST.get(f'game_{game.id}'):
+                Completion.objects.create(participant=participant, game=game)
+
         return redirect('participant_detail', uuid=uuid)
 
     games = get_games_for_age(participant.age)
+    completions = Completion.objects.filter(participant=participant).values_list('game_id', flat=True)
 
     return render(request, 'participant_detail.html', {
         'participant': participant,
         'games': games,
+        'completions': completions,
     })
-

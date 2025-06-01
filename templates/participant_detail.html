@@ -6,33 +6,42 @@
     <title>Login</title>
 </head>
 <body class="bg-light">
-    <div class="container vh-100">
-        <div class="row h-100 justify-content-center align-items-center">
-            <h5 class="display-2">Участник: {{ participant.uuid }}</h5>
-            <h6 class="display-3">Очки: {{ participant.points }}</h6>
+    <h2>Участник: {{ participant.name|default:"(без имени)" }}</h2>
 
-            <form method="post">
-                {% csrf_token %}
-                <label class="form-label">Имя:</label>
-                <input class="form-control" type="text" name="name" value="{{ participant.name }}"><br>
-                <label class="form-label">Возраст:</label>
-                <input class="form-control" type="number" name="age" value="{{ participant.age }}"><br>
-                <label class="form-label">Очки:</label>
-                <input class="form-control" type="number" name="points" value="{{ participant.points }}"><br>
-                <button class="btn btn-primary" type="submit">Сохранить</button>
-            </form>
-        </div>
+        <form method="post">
+          {% csrf_token %}
+          <div style="margin-bottom: 10px;">
+            <label>Имя:</label><br>
+            <input type="text" name="name" value="{{ participant.name }}" required>
+          </div>
 
-        {% if games %}
-          <h4>Список игр для возраста {{ participant.age }}</h4>
-          {% for game in games %}
-            <div>
-              <input type="checkbox" id="game_{{ game.id }}">
-              <label for="game_{{ game.id }}">{{ game.name }}</label>
+          <div style="margin-bottom: 10px;">
+            <label>Возраст:</label><br>
+            <input type="number" name="age" value="{{ participant.age }}" required>
+          </div>
+
+          <div style="margin-bottom: 10px;">
+            <label>Очки:</label><br>
+            <input type="number" name="points" value="{{ participant.points }}">
+          </div>
+
+          {% if games %}
+            <hr>
+            <h3>Список игр</h3>
+            <div style="display: flex; flex-direction: column; gap: 5px;">
+              {% for game in games %}
+                <label>
+                  <input type="checkbox" name="game_{{ game.id }}" {% if game.id in completions %}checked{% endif %}>
+                  {{ game.name }}
+                </label>
+              {% endfor %}
             </div>
-          {% endfor %}
-        {% endif %}
-    </div>
+          {% endif %}
+
+          <hr>
+          <button type="submit" style="margin-top: 15px;">Сохранить</button>
+        </form>
+
 </body>
 </html>
 
